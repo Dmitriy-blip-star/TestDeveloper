@@ -28,6 +28,8 @@ namespace CookingPrototype.Controllers {
 		float _timer = 0f;
 		Stack<List<Order>> _orderSets;
 
+		Customer _customer;
+
 		bool HasFreePlaces {
 			get { return CustomerPlaces.Any(x => x.IsFree); }
 		}
@@ -78,6 +80,7 @@ namespace CookingPrototype.Controllers {
 
 			var place = freePlaces[Random.Range(0, freePlaces.Count)];
 			place.PlaceCustomer(GenerateCustomer());
+			
 			TotalCustomersGenerated++;
 			TotalCustomersGeneratedChanged?.Invoke();
 		}
@@ -88,7 +91,7 @@ namespace CookingPrototype.Controllers {
 
 			var orders = _orderSets.Pop();
 			customer.Init(orders);
-
+			_customer = customer;
 			return customer;
 		}
 
@@ -139,7 +142,7 @@ namespace CookingPrototype.Controllers {
 		/// <param name="order">Заказ, который пытаемся отдать</param>
 		/// <returns>Флаг - результат, удалось ли успешно отдать заказ</returns>
 		public bool ServeOrder(Order order) {
-			throw  new NotImplementedException("ServeOrder: this feature is not implemented.");
+			return _customer.ServeOrder(order);
 		}
 	}
 }
