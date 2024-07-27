@@ -4,8 +4,10 @@ using UnityEngine;
 
 using CookingPrototype.Kitchen;
 using CookingPrototype.UI;
+using Assets.Scripts.UI;
 
 using JetBrains.Annotations;
+
 
 namespace CookingPrototype.Controllers {
 	public sealed class GameplayController : MonoBehaviour {
@@ -14,6 +16,7 @@ namespace CookingPrototype.Controllers {
 		public GameObject TapBlock   = null;
 		public WinWindow  WinWindow  = null;
 		public LoseWindow LoseWindow = null;
+		public StartWindow StartWindow = null;
 
 
 		int _ordersTarget = 0;
@@ -43,6 +46,10 @@ namespace CookingPrototype.Controllers {
 			}
 		}
 
+		private void Start() {
+			BeginGame();
+		}
+
 		void Init() {
 			TotalOrdersServed = 0;
 			Time.timeScale = 1f;
@@ -53,6 +60,12 @@ namespace CookingPrototype.Controllers {
 			if ( CustomersController.Instance.IsComplete ) {
 				EndGame(TotalOrdersServed >= OrdersTarget);
 			}
+		}
+
+		void BeginGame() {
+			TapBlock?.SetActive(true);
+			StartWindow.Show();
+			Time.timeScale = 0f;
 		}
 
 		void EndGame(bool win) {
@@ -69,6 +82,7 @@ namespace CookingPrototype.Controllers {
 			TapBlock?.SetActive(false);
 			WinWindow?.Hide();
 			LoseWindow?.Hide();
+			StartWindow?.Hide();
 		}
 
 		[UsedImplicitly]
@@ -99,6 +113,11 @@ namespace CookingPrototype.Controllers {
 #else
 			Application.Quit();
 #endif
+		}
+
+		public void StartGame() {
+			HideWindows();
+			Time.timeScale = 1f;
 		}
 	}
 }

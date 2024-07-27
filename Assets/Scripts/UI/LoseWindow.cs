@@ -17,10 +17,11 @@ namespace CookingPrototype.UI {
 
 		void Init() {
 			var gc = GameplayController.Instance;
-
+			print(gc.OrdersTarget);
 			ReplayButton.onClick.AddListener(gc.Restart);
 			ExitButton  .onClick.AddListener(gc.CloseGame);
 			CloseButton .onClick.AddListener(gc.CloseGame);
+			//_isInit = true;
 		}
 
 		public void Show() {
@@ -29,7 +30,6 @@ namespace CookingPrototype.UI {
 			}
 
 			var gc = GameplayController.Instance;
-
 			GoalBar.fillAmount = Mathf.Clamp01((float) gc.TotalOrdersServed / gc.OrdersTarget);
 			GoalText.text = $"{gc.TotalOrdersServed}/{gc.OrdersTarget}";
 
