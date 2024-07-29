@@ -39,6 +39,10 @@ namespace CookingPrototype.Kitchen {
 			if ( WaitTime <= 0f ) {
 				CustomersController.Instance.FreeCustomer(this);
 			}
+
+			if ( IsComplete ) {
+				CustomersController.Instance.FreeCustomer(this);
+			}
 		}
 
 		[ContextMenu("Set random sprite")]
